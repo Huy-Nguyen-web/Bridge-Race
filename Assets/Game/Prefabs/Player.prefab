@@ -131,10 +131,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3ee0f588e45b34b81195902257231d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  brickMeshPrefab: {fileID: 6618213606797335822, guid: 98fb2054027f4374cbdf4cf5b4ecdcc8,
+    type: 3}
   controller: {fileID: 8626917866481104222}
   speed: 10
   characterColor: 0
   collectedBrick: []
+  brickMeshStack: []
   stairLayer:
     serializedVersion: 2
     m_Bits: 64

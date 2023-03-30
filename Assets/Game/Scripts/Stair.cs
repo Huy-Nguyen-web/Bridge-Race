@@ -13,6 +13,5 @@ public class Stair : MonoBehaviour
     public void ChangeColor(ColorData.ColorType color){
         GetComponent<MeshRenderer>().material = colorData.GetColor(color);
         stairColor = color;
-        Debug.Log(stairColor);
     }
 }

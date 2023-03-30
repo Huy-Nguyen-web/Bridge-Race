@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Character : MonoBehaviour
 {
+    [SerializeField] private GameObject brickMeshPrefab;
     public CharacterController controller;
     public float speed = 10.0f;
     public ColorData.ColorType characterColor;
     public List<GameObject> collectedBrick = new List<GameObject>();
+    public List<GameObject> brickMeshStack = new List<GameObject>();
     public LayerMask stairLayer;
     public ColorData colorData;
     private void Start() {
@@ -18,16 +20,25 @@ public class Character : MonoBehaviour
     public void ReturnBrick(){
         collectedBrick[collectedBrick.Count - 1].SetActive(true);
         collectedBrick.RemoveAt(collectedBrick.Count - 1);
+        Destroy(brickMeshStack[brickMeshStack.Count - 1]);
+        brickMeshStack.RemoveAt(brickMeshStack.Count - 1);
     }
     private void OnTriggerEnter(Collider other) {
         if(other.tag == "Stair"){
             BuildStair(other);
         } else if(other.tag == "Brick"){
             if(this.characterColor == other.GetComponent<Brick>().brickColor){ 
-                collectedBrick.Add(other.gameObject);
-                other.gameObject.SetActive(false);
+                AddBrick(other);
             }
         }
+    }
+    private void AddBrick(Collider other){
+        collectedBrick.Add(other.gameObject);
+        other.gameObject.SetActive(false);
+        GameObject brickMesh = Instantiate(brickMeshPrefab, transform);
+        brickMesh.transform.localPosition = new Vector3(0, 0.3f * brickMeshStack.Count, -0.5f);
+        brickMesh.GetComponent<MeshRenderer>().material = colorData.GetColor(characterColor);
+        brickMeshStack.Add(brickMesh);
     }
     void BuildStair(Collider stair){
         Stair stairScript = stair.gameObject.GetComponent<Stair>();
