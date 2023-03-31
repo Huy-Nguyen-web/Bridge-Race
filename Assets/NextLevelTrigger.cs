@@ -6,11 +6,17 @@ public class NextLevelTrigger : MonoBehaviour
 {
     [SerializeField] private BrickSpawner currentBrickSpawner;
     [SerializeField] private BrickSpawner previousBrickSpawner;
+    [SerializeField] private GameObject wallBlock;
+    [SerializeField] private int currentLevel;
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Character"){
+            Character characterScript = other.GetComponent<Character>();
+            characterScript.currentLevel = currentLevel;
             Enemy enemyScript = other.GetComponent<Enemy>();
+            wallBlock.SetActive(false);
+            Invoke(nameof(CloseWallBlock), 0.5f);
             if(enemyScript != null){
-                enemyScript.currentLevel += 1;
+                enemyScript.currentLevel = currentLevel;
                 enemyScript.CreateBrickList();
                 enemyScript.MoveToBrick();
             }
@@ -25,5 +31,8 @@ public class NextLevelTrigger : MonoBehaviour
                 }
             }
         }
+    }
+    private void CloseWallBlock(){
+        wallBlock.SetActive(true);
     }
 }

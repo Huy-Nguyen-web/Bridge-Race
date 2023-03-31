@@ -20,6 +20,7 @@ public class Character : MonoBehaviour
     }
 
     public void ReturnBrick(){
+        Debug.Log(currentLevel);
         if(collectedBrick[collectedBrick.Count - 1].transform.parent.name == "BrickSpawnerLevel" + currentLevel.ToString()){
             collectedBrick[collectedBrick.Count - 1].SetActive(true);
         }
