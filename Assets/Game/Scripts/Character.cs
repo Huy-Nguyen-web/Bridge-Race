@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine.AI;
 using System.Collections.Generic;
 using UnityEngine;
 public class Character : MonoBehaviour
@@ -12,8 +13,10 @@ public class Character : MonoBehaviour
     public LayerMask stairLayer;
     public ColorData colorData;
     public int currentLevel = 1;
+    public bool gameEnd;
     private void Start() {
         OnInit();
+        gameEnd = false;
     }
     public virtual void OnInit(){
         // ChangeColor();
@@ -61,5 +64,23 @@ public class Character : MonoBehaviour
         ColorData.ColorType color = (ColorData.ColorType) colorNum;
         GetComponent<MeshRenderer>().material = colorData.GetColor(color);
         characterColor = color;
+    }
+    public void ClearBrick(){
+        foreach(GameObject brickMesh in brickMeshStack){
+            GameObject.Destroy(brickMesh);
+        }
+        brickMeshStack.Clear();
+        collectedBrick.Clear();
+    }
+    public void EndGame(Vector3 endLevelPosition){
+        Debug.Log("End Game");
+        ClearBrick();
+        gameEnd = true;
+        if(GetComponent<NavMeshAgent>() != null){
+            GetComponent<NavMeshAgent>().enabled = false;
+        }
+        if (GetComponent<CharacterController>() != null){
+            GetComponent<CharacterController>().enabled = false;
+        }
     }
 }

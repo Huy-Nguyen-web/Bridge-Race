@@ -9,10 +9,15 @@ public class Player : Character
     private float gravity = -10f;
     private DynamicJoystick joystick;
     private bool isMoving;
+    private EndLevel endLevel;
     private void Start() {
         joystick = FindObjectOfType<DynamicJoystick>();
+        endLevel = FindObjectOfType<EndLevel>();
+        endLevel.OnEndLevelAction += EndGame;
     }
     private void Update() {
+        if(gameEnd) return;
+
         direction = new Vector3(joystick.Direction.x, 0f, joystick.Direction.y).normalized;
         RaycastHit stair;
         if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), Vector3.down, out stair, Mathf.Infinity, stairLayer)){

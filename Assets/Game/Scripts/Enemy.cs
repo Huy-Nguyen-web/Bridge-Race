@@ -9,7 +9,10 @@ public class Enemy : Character
     private NavMeshAgent navMeshAgent;
     private List<Brick> bricks = new List<Brick>();
     private GameObject brickSpawner;
+    private EndLevel endLevel;
     private void Start() {
+        endLevel = FindObjectOfType<EndLevel>();
+        endLevel.OnEndLevelAction += EndGame;
         navMeshAgent = GetComponent<NavMeshAgent>();
         CreateBrickList();
         MoveToBrick();
@@ -38,6 +41,7 @@ public class Enemy : Character
         return closestBrickPosition;
     }
     private void Update() {
+        if(gameEnd) return;
         if(collectedBrick.Count == 0){
             MoveToBrick();
         }
