@@ -9,28 +9,26 @@ public class Enemy : Character
     private NavMeshAgent navMeshAgent;
     private List<Brick> bricks = new List<Brick>();
     private GameObject brickSpawner;
-    public int currentLevel = 1;
     private void Start() {
         navMeshAgent = GetComponent<NavMeshAgent>();
         CreateBrickList();
         MoveToBrick();
     }
-    private Vector3 GetBrickPosition(){
-        for (int i = 0; i < 100; i++){
-            int randomBrick = Random.Range(0, bricks.Count - 1);
-            if(bricks[randomBrick].brickColor == characterColor && bricks[randomBrick].gameObject.active == true){
-                return bricks[randomBrick].transform.position;
-            }
-        }
-        return transform.position;
-    }
+    // private Vector3 GetBrickPosition(){
+    //     for (int i = 0; i < 100; i++){
+    //         int randomBrick = Random.Range(0, bricks.Count - 1);
+    //         if(bricks[randomBrick].brickColor == characterColor && bricks[randomBrick].gameObject.active == true){
+    //             return bricks[randomBrick].transform.position;
+    //         }
+    //     }
+    //     return transform.position;
+    // }
     private Vector3 GetClosestBrickPosition(){
         Vector3 closestBrickPosition = transform.position;
         float distanceToClosestBrick = 100000000f;
         for (int i = 0; i < bricks.Count; i++){
             if(bricks[i].gameObject.active && bricks[i].brickColor == characterColor){
                 float distanceToBrick = Vector3.Distance(transform.position, bricks[i].transform.position);
-                if(distanceToClosestBrick == null) distanceToClosestBrick = distanceToBrick;
                 if(distanceToBrick < distanceToClosestBrick){
                     distanceToClosestBrick = distanceToBrick;
                     closestBrickPosition = bricks[i].transform.position;
@@ -45,17 +43,15 @@ public class Enemy : Character
         }
         if(navMeshAgent.remainingDistance < 0.1f){
             if(collectedBrick.Count < 10){
-                Debug.Log(characterColor + ": Find new brick");
                 MoveToBrick();
             }else{
-                Debug.Log(characterColor + ": Build the bridge");
                 MoveToNextLevel();
             }
         }
     }
     public void MoveToBrick(){
         CreateBrickList();
-        navMeshAgent.SetDestination(GetBrickPosition());
+        navMeshAgent.SetDestination(GetClosestBrickPosition());
     }
     private void MoveToNextLevel(){
         int nextLevel = currentLevel + 1;
@@ -72,7 +68,6 @@ public class Enemy : Character
             }
         }
         navMeshAgent.SetDestination(targetPosition);
-        // navMeshAgent.SetDestination(new Vector3(-10.9f, nextGroundLevel.transform.position.y, 41));
     }
     public void CreateBrickList(){
         bricks.Clear();

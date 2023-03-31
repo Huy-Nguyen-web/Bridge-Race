@@ -11,18 +11,24 @@ public class Character : MonoBehaviour
     public List<GameObject> brickMeshStack = new List<GameObject>();
     public LayerMask stairLayer;
     public ColorData colorData;
+    public int currentLevel = 1;
     private void Start() {
         OnInit();
     }
     public virtual void OnInit(){
         // ChangeColor();
     }
+
     public void ReturnBrick(){
-        collectedBrick[collectedBrick.Count - 1].SetActive(true);
+        if(collectedBrick[collectedBrick.Count - 1].transform.parent.name == "BrickSpawnerLevel" + currentLevel.ToString()){
+            collectedBrick[collectedBrick.Count - 1].SetActive(true);
+        }
+        Debug.Log(collectedBrick[collectedBrick.Count - 1].transform.parent.name);
         collectedBrick.RemoveAt(collectedBrick.Count - 1);
         Destroy(brickMeshStack[brickMeshStack.Count - 1]);
         brickMeshStack.RemoveAt(brickMeshStack.Count - 1);
     }
+
     private void OnTriggerEnter(Collider other) {
         if(other.tag == "Stair"){
             BuildStair(other);
