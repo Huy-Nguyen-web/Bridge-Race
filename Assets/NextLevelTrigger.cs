@@ -17,8 +17,9 @@ public class NextLevelTrigger : MonoBehaviour
             Invoke(nameof(CloseWallBlock), 0.5f);
             if(enemyScript != null){
                 enemyScript.currentLevel = currentLevel;
-                enemyScript.CreateBrickList();
-                enemyScript.MoveToBrick();
+                enemyScript.SwitchState(enemyScript.SeekBrickState);
+                // enemyScript.CreateBrickList();
+                // enemyScript.MoveToBrick();
             }
             foreach(GameObject brick in currentBrickSpawner.bricks){
                 if (brick.GetComponent<Brick>().brickColor == other.GetComponent<Character>().characterColor){

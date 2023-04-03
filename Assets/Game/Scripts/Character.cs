@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine.AI;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,11 +23,9 @@ public class Character : MonoBehaviour
     }
 
     public void ReturnBrick(){
-        Debug.Log(currentLevel);
         if(collectedBrick[collectedBrick.Count - 1].transform.parent.name == "BrickSpawnerLevel" + currentLevel.ToString()){
             collectedBrick[collectedBrick.Count - 1].SetActive(true);
         }
-        Debug.Log(collectedBrick[collectedBrick.Count - 1].transform.parent.name);
         collectedBrick.RemoveAt(collectedBrick.Count - 1);
         Destroy(brickMeshStack[brickMeshStack.Count - 1]);
         brickMeshStack.RemoveAt(brickMeshStack.Count - 1);
@@ -46,6 +44,7 @@ public class Character : MonoBehaviour
         collectedBrick.Add(other.gameObject);
         other.gameObject.SetActive(false);
         GameObject brickMesh = Instantiate(brickMeshPrefab, transform);
+
         brickMesh.transform.localPosition = new Vector3(0, 0.3f * brickMeshStack.Count, -0.5f);
         brickMesh.GetComponent<MeshRenderer>().material = colorData.GetColor(characterColor);
         brickMeshStack.Add(brickMesh);
@@ -73,7 +72,6 @@ public class Character : MonoBehaviour
         collectedBrick.Clear();
     }
     public void EndGame(Vector3 endLevelPosition){
-        Debug.Log("End Game");
         ClearBrick();
         gameEnd = true;
         if(GetComponent<NavMeshAgent>() != null){
@@ -82,5 +80,49 @@ public class Character : MonoBehaviour
         if (GetComponent<CharacterController>() != null){
             GetComponent<CharacterController>().enabled = false;
         }
+    }
+    // private void OnControllerColliderHit(ControllerColliderHit hit) {
+    //     if(hit.transform.tag == "Character"){
+    //         Debug.Log(hit.transform.name);
+    //         if(hit.transform.GetComponent<Character>().collectedBrick.Count > collectedBrick.Count){
+    //             // If other player has more brick than this player,
+    //             // this player need to be stun and thrown the brick
+    //             CharacterGotHit();
+    //             Invoke(nameof(CharacterGotUp), 1f);
+    //         }
+    //     }
+    // }
+    // private void OnCollisionEnter(Collision other) {
+    //     if(other.transform.tag == "Character"){
+    //         if(other.transform.GetComponent<Character>().collectedBrick.Count > collectedBrick.Count){
+    //             // If other player has more brick than this player,
+    //             // this player need to be stun and thrown the brick
+    //             CharacterGotHit();
+    //             Invoke(nameof(CharacterGotUp), 1f);
+    //         }
+    //     }
+    // }
+    public void CharacterGotHit(){
+        Debug.Log(transform.name + " got hit");
+        if(GetComponent<NavMeshAgent>() != null){
+            GetComponent<NavMeshAgent>().enabled = false;
+        }
+        if(GetComponent<CharacterController>() != null){
+            GetComponent<CharacterController>().enabled = false;
+        }
+        GetComponent<Rigidbody>().isKinematic = false;
+
+        Invoke(nameof(CharacterGotUp), 1f);
+    }
+    public void CharacterGotUp(){
+        if(GetComponent<NavMeshAgent>() != null){
+            GetComponent<NavMeshAgent>().enabled = true;
+        }
+        if(GetComponent<CharacterController>() != null){
+            GetComponent<CharacterController>().enabled = true;
+        }
+        GetComponent<Rigidbody>().isKinematic = true;
+        Debug.Log(GetComponent<Rigidbody>().isKinematic);
+        Debug.Log(transform.name + " got up");
     }
 }

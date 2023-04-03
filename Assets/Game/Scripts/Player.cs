@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Player : Character 
 {
+    [SerializeField] private LayerMask groundLayer;
     private float deltaX, deltaY;
     private Vector3 direction;
     private Vector3 velocity;
@@ -33,8 +34,13 @@ public class Player : Character
             controller.Move(direction * speed * Time.deltaTime);
         }
 
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        RaycastHit ground;
+        if(!Physics.Raycast(transform.position, Vector3.down, out ground, 1f, groundLayer)){
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }else{
+            velocity.y = 0;
+        }
     }
 }
 
