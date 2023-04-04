@@ -21,6 +21,7 @@ public class Enemy : Character
     }
     private void Update() {
         if(gameEnd) return;
+        if(gotHit) return;
         currentState.OnUpdate(this);
     }
     public void SwitchState(EnemyBaseState state){

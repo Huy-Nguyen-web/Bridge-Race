@@ -14,12 +14,13 @@ public class Character : MonoBehaviour
     public ColorData colorData;
     public int currentLevel = 1;
     public bool gameEnd;
+    public bool gotHit;
     private void Start() {
         OnInit();
         gameEnd = false;
     }
     public virtual void OnInit(){
-        // ChangeColor();
+
     }
 
     public void ReturnBrick(){
@@ -81,48 +82,29 @@ public class Character : MonoBehaviour
             GetComponent<CharacterController>().enabled = false;
         }
     }
-    // private void OnControllerColliderHit(ControllerColliderHit hit) {
-    //     if(hit.transform.tag == "Character"){
-    //         Debug.Log(hit.transform.name);
-    //         if(hit.transform.GetComponent<Character>().collectedBrick.Count > collectedBrick.Count){
-    //             // If other player has more brick than this player,
-    //             // this player need to be stun and thrown the brick
-    //             CharacterGotHit();
-    //             Invoke(nameof(CharacterGotUp), 1f);
-    //         }
-    //     }
-    // }
-    // private void OnCollisionEnter(Collision other) {
-    //     if(other.transform.tag == "Character"){
-    //         if(other.transform.GetComponent<Character>().collectedBrick.Count > collectedBrick.Count){
-    //             // If other player has more brick than this player,
-    //             // this player need to be stun and thrown the brick
-    //             CharacterGotHit();
-    //             Invoke(nameof(CharacterGotUp), 1f);
-    //         }
-    //     }
-    // }
     public void CharacterGotHit(){
-        Debug.Log(transform.name + " got hit");
         if(GetComponent<NavMeshAgent>() != null){
             GetComponent<NavMeshAgent>().enabled = false;
         }
         if(GetComponent<CharacterController>() != null){
             GetComponent<CharacterController>().enabled = false;
         }
+        gotHit = true;
         GetComponent<Rigidbody>().isKinematic = false;
-
         Invoke(nameof(CharacterGotUp), 1f);
     }
     public void CharacterGotUp(){
+        Enemy enemyScript = GetComponent<Enemy>();
         if(GetComponent<NavMeshAgent>() != null){
             GetComponent<NavMeshAgent>().enabled = true;
         }
         if(GetComponent<CharacterController>() != null){
             GetComponent<CharacterController>().enabled = true;
         }
+        if(enemyScript != null){
+            enemyScript.SwitchState(enemyScript.currentState);
+        }
+        gotHit = false;
         GetComponent<Rigidbody>().isKinematic = true;
-        Debug.Log(GetComponent<Rigidbody>().isKinematic);
-        Debug.Log(transform.name + " got up");
     }
 }

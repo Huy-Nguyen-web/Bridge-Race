@@ -97,7 +97,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 570453012360129328}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 1
   m_Height: 2
@@ -131,6 +131,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
+  navMeshAgent: {fileID: 6686696417543033345}
+  bricks: []
+  brickSpawner: {fileID: 0}
 --- !u!195 &6686696417543033345
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -342,6 +345,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ColliderBody
+      objectReference: {fileID: 0}
+    - target: {fileID: 8253897932725427979, guid: 49d253f428d34374683d6eb9142f79f7,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49d253f428d34374683d6eb9142f79f7, type: 3}
