@@ -146,6 +146,7 @@ MonoBehaviour:
   colorData: {fileID: 11400000, guid: 8a0bbe3f0c4278f43bf9a237d171db2b, type: 2}
   currentLevel: 1
   gameEnd: 0
+  gotHit: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 128

@@ -1,18 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class UIManager : Singleton<UIManager>
+public class UIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private EndLevel endLevel;
+    [SerializeField] private GameObject endLevelScreen;
+    [SerializeField] private GameObject nextLevelButton;
+    private void Start() {
+        endLevelScreen.SetActive(false);
+        endLevel = FindObjectOfType<EndLevel>();
+        endLevel.OnEndUIPopUp += ShowEndScreen;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void NextLevel(){
+        int nextLevel = SceneManager.GetActiveScene().buildIndex + 1;
+        if(nextLevel > SceneManager.sceneCount - 1){
+            nextLevel = 0;
+        }
+        SceneManager.LoadScene(nextLevel);
+   }
+    public void RestartLevel(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void ShowEndScreen(bool isPlayer){
+        endLevelScreen.SetActive(true);
+        nextLevelButton.SetActive(isPlayer);
     }
 }

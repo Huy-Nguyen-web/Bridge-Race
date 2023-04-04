@@ -17,7 +17,7 @@ public class EnemySeekBrickState : EnemyBaseState
     }
     private Vector3 GetClosestBrickPosition(Enemy enemy){
         Vector3 closestBrickPosition = enemy.transform.position;
-        float distanceToClosestBrick = 100000000f;
+        float distanceToClosestBrick = Mathf.Infinity;
         for (int i = 0; i < enemy.bricks.Count; i++){
             if(enemy.bricks[i].gameObject.active && enemy.bricks[i].brickColor == enemy.characterColor){
                 float distanceToBrick = Vector3.Distance(enemy.transform.position, enemy.bricks[i].transform.position);
