@@ -5,6 +5,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     [SerializeField] private GameObject brickMeshPrefab;
+    public EndLevel endLevel;
     public Animator animator;
     public GameObject characterModel;
     public GameObject characterMesh;
@@ -18,6 +19,11 @@ public class Character : MonoBehaviour
     public int currentLevel = 1;
     public bool gameEnd;
     public bool gotHit;
+    public bool isWin;
+    private void Awake() {
+        endLevel = FindObjectOfType<EndLevel>();
+        isWin = false;
+    }
     private void Start() {
         OnInit();
         gameEnd = false;
@@ -63,7 +69,6 @@ public class Character : MonoBehaviour
         }
     }
     public void ChangeColor(int colorNum){
-        // int randomColorInt = Random.Range(0, 4);
         ColorData.ColorType color = (ColorData.ColorType) colorNum;
         characterMesh.GetComponent<SkinnedMeshRenderer>().material = colorData.GetColor(color);
         characterColor = color;
@@ -78,7 +83,9 @@ public class Character : MonoBehaviour
     public void EndGame(Vector3 endLevelPosition){
         ClearBrick();
         gameEnd = true;
-        animator.SetTrigger("winning");
+        if(isWin){
+            animator.SetTrigger("winning");
+        }
         if(GetComponent<NavMeshAgent>() != null){
             GetComponent<NavMeshAgent>().enabled = false;
         }

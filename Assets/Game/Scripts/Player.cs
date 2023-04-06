@@ -10,10 +10,8 @@ public class Player : Character
     private float gravity = -10f;
     private DynamicJoystick joystick;
     private bool isMoving;
-    private EndLevel endLevel;
     private void Start() {
         joystick = FindObjectOfType<DynamicJoystick>();
-        endLevel = FindObjectOfType<EndLevel>();
         endLevel.OnEndLevelAction += EndGame;
         gotHit = false;
     }
