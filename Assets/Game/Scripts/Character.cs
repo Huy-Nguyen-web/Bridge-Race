@@ -5,6 +5,9 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     [SerializeField] private GameObject brickMeshPrefab;
+    public Animator animator;
+    public GameObject characterModel;
+    public GameObject characterMesh;
     public CharacterController controller;
     public float speed = 10.0f;
     public ColorData.ColorType characterColor;
@@ -44,7 +47,7 @@ public class Character : MonoBehaviour
     private void AddBrick(Collider other){
         collectedBrick.Add(other.gameObject);
         other.gameObject.SetActive(false);
-        GameObject brickMesh = Instantiate(brickMeshPrefab, transform);
+        GameObject brickMesh = Instantiate(brickMeshPrefab, characterModel.transform);
 
         brickMesh.transform.localPosition = new Vector3(0, 0.3f * brickMeshStack.Count, -0.5f);
         brickMesh.GetComponent<MeshRenderer>().material = colorData.GetColor(characterColor);
@@ -62,7 +65,7 @@ public class Character : MonoBehaviour
     public void ChangeColor(int colorNum){
         // int randomColorInt = Random.Range(0, 4);
         ColorData.ColorType color = (ColorData.ColorType) colorNum;
-        GetComponent<MeshRenderer>().material = colorData.GetColor(color);
+        characterMesh.GetComponent<SkinnedMeshRenderer>().material = colorData.GetColor(color);
         characterColor = color;
     }
     public void ClearBrick(){
@@ -75,6 +78,7 @@ public class Character : MonoBehaviour
     public void EndGame(Vector3 endLevelPosition){
         ClearBrick();
         gameEnd = true;
+        animator.SetTrigger("winning");
         if(GetComponent<NavMeshAgent>() != null){
             GetComponent<NavMeshAgent>().enabled = false;
         }
@@ -83,15 +87,18 @@ public class Character : MonoBehaviour
         }
     }
     public void CharacterGotHit(){
-        if(GetComponent<NavMeshAgent>() != null){
-            GetComponent<NavMeshAgent>().enabled = false;
+        if(!gotHit){
+            if(GetComponent<NavMeshAgent>() != null){
+                GetComponent<NavMeshAgent>().enabled = false;
+            }
+            if(GetComponent<CharacterController>() != null){
+                GetComponent<CharacterController>().enabled = false;
+            }
+            gotHit = true;
+            animator.SetTrigger("falling");
+            // GetComponent<Rigidbody>().isKinematic = false;
+            Invoke(nameof(CharacterGotUp), 3.5f);
         }
-        if(GetComponent<CharacterController>() != null){
-            GetComponent<CharacterController>().enabled = false;
-        }
-        gotHit = true;
-        GetComponent<Rigidbody>().isKinematic = false;
-        Invoke(nameof(CharacterGotUp), 1f);
     }
     public void CharacterGotUp(){
         Enemy enemyScript = GetComponent<Enemy>();
@@ -105,6 +112,6 @@ public class Character : MonoBehaviour
             enemyScript.SwitchState(enemyScript.currentState);
         }
         gotHit = false;
-        GetComponent<Rigidbody>().isKinematic = true;
+        // GetComponent<Rigidbody>().isKinematic = true;
     }
 }

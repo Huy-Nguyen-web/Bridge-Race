@@ -32,6 +32,7 @@ public class EnemySeekBrickState : EnemyBaseState
     private void MoveToBrick(Enemy enemy){
         CreateBrickList(enemy);
         enemy.navMeshAgent.SetDestination(GetClosestBrickPosition(enemy));
+        enemy.animator.SetBool("isRunning", true);
     }
     private void CreateBrickList(Enemy enemy){
         enemy.bricks.Clear();
