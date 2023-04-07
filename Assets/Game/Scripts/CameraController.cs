@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
         characterSpawner.OnPlayerSpawn += OnPlayerSpawn;
         endLevel.OnEndLevelAction += EndGame;
     }
-    private void Update() {
+    private void LateUpdate() {
         if(!endGame){
             transform.position = Vector3.Lerp(transform.position, player.transform.position + offset, speed * Time.deltaTime);
         } else {

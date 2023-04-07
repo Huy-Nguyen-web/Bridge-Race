@@ -8,7 +8,7 @@ public class EndLevel : MonoBehaviour
     public UnityAction<Vector3> OnEndLevelAction;
     public UnityAction<bool> OnEndUIPopUp;
     private void OnTriggerEnter(Collider other) {
-        if(other.transform.tag == "Character"){
+        if(other.CompareTag(Constant.TAG_CHARACTER)){
             other.GetComponent<Character>().isWin = true;
             OnEndLevelAction?.Invoke(transform.position);
             OnEndUIPopUp?.Invoke(other.GetComponent<Player>() != null);

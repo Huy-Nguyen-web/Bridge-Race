@@ -9,11 +9,13 @@ public class Player : Character
     private Vector2 startPosition;
     private float gravity = -10f;
     private DynamicJoystick joystick;
+    private GroundBound currentGroundBound;
     private bool isMoving;
     private void Start() {
         joystick = FindObjectOfType<DynamicJoystick>();
         endLevel.OnEndLevelAction += EndGame;
         gotHit = false;
+        UpdateGroundBound();
     }
     private void Update() {
         if(gameEnd) return;
@@ -27,6 +29,22 @@ public class Player : Character
                 if (direction.z >= 0f) direction.z = 0;
             }
         }
+        if(transform.position.x > currentGroundBound.groundBoundRight){
+            if(direction.x > 0){
+                direction.x = 0;
+            }
+        }
+        if(transform.position.x < currentGroundBound.groundBoundLeft){
+            if(direction.x < 0){
+                direction.x = 0;
+            }
+        }
+        if(transform.position.z < currentGroundBound.groundBoundBottom){
+            if(direction.z < 0){
+                direction.z = 0;
+            }
+        }
+
         if(Vector3.Distance(Vector3.zero, direction) > 0.1f){
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
@@ -35,6 +53,8 @@ public class Player : Character
         }else{
             animator.SetBool("isRunning", false);
         }
+        // Vector3 clampPosition = new Vector3(Mathf.Clamp(transform.position.x, currentGroundBound.groundBoundLeft, currentGroundBound.groundBoundRight), transform.position.y, Mathf.Clamp(transform.position.z, currentGroundBound.groundBoundBottom, Mathf.Infinity)); 
+        // transform.position = clampPosition;
 
         RaycastHit ground;
         if(!Physics.Raycast(transform.position, Vector3.down, out ground, 1f, groundLayer)){
@@ -43,6 +63,10 @@ public class Player : Character
         }else{
             velocity.y = 0;
         }
+    }
+    public void UpdateGroundBound(){
+        GameObject currentGroundLevel = GameObject.Find("GroundLevel" + currentLevel);
+        currentGroundBound = currentGroundLevel.GetComponent<GroundBound>();
     }
 }
 

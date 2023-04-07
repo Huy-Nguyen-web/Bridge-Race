@@ -9,17 +9,19 @@ public class NextLevelTrigger : MonoBehaviour
     [SerializeField] private GameObject wallBlock;
     [SerializeField] private int currentLevel;
     private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.tag == "Character"){
+        if(other.CompareTag("Character")){
             Character characterScript = other.GetComponent<Character>();
             characterScript.currentLevel = currentLevel;
+
             Enemy enemyScript = other.GetComponent<Enemy>();
-            wallBlock.SetActive(false);
-            Invoke(nameof(CloseWallBlock), 0.5f);
+            Player playerScript = other.GetComponent<Player>();
+            
+            if (playerScript != null){
+                playerScript.UpdateGroundBound();
+            }
             if(enemyScript != null){
                 enemyScript.currentLevel = currentLevel;
                 enemyScript.SwitchState(enemyScript.SeekBrickState);
-                // enemyScript.CreateBrickList();
-                // enemyScript.MoveToBrick();
             }
             foreach(GameObject brick in currentBrickSpawner.bricks){
                 if (brick.GetComponent<Brick>().brickColor == other.GetComponent<Character>().characterColor){
@@ -32,8 +34,5 @@ public class NextLevelTrigger : MonoBehaviour
                 }
             }
         }
-    }
-    private void CloseWallBlock(){
-        wallBlock.SetActive(true);
     }
 }

@@ -30,7 +30,7 @@ public class EnemySeekBrickState : EnemyBaseState
         return closestBrickPosition;
     }
     private void MoveToBrick(Enemy enemy){
-        CreateBrickList(enemy);
+        // CreateBrickList(enemy);
         enemy.navMeshAgent.SetDestination(GetClosestBrickPosition(enemy));
         enemy.animator.SetBool("isRunning", true);
     }

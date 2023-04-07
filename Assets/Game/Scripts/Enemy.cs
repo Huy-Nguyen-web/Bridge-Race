@@ -14,6 +14,7 @@ public class Enemy : Character
     public EnemySeekBrickState SeekBrickState = new EnemySeekBrickState();
     private void Start() {
         currentState = SeekBrickState;
+        currentState.OnStart(this) ;
         endLevel.OnEndLevelAction += EndGame;
         navMeshAgent = GetComponent<NavMeshAgent>();
     }

@@ -10,7 +10,7 @@ public class BrickSpawner : MonoBehaviour
     [SerializeField] private ColorData colorData;
     [SerializeField] private bool enableOnStart;
     public List<GameObject> bricks = new List<GameObject>();
-    private void Start() {
+    private void Awake() {
         for(int i = 0; i < column; i++){
             for (int j = 0; j < row; j++){
                 GameObject brick = Instantiate(brickPrefab, new Vector3(transform.position.x + i * spaceBetweenBrick, transform.position.y + 0.25f,transform.position.z + j * spaceBetweenBrick), Quaternion.identity, transform);

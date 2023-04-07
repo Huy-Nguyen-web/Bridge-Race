@@ -849,6 +849,7 @@ GameObject:
   - component: {fileID: 342936659}
   - component: {fileID: 342936658}
   - component: {fileID: 342936662}
+  - component: {fileID: 342936663}
   m_Layer: 7
   m_Name: GroundLevel3
   m_TagString: Untagged
@@ -952,6 +953,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 2.220446e-16, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &342936663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342936657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2a25d4b643470c4391154f0dc1e3655, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundBoundLeft: -15
+  groundBoundRight: 15
+  groundBoundBottom: 96
 --- !u!1 &352558104
 GameObject:
   m_ObjectHideFlags: 0
@@ -3133,6 +3149,7 @@ GameObject:
   - component: {fileID: 1551476930}
   - component: {fileID: 1551476929}
   - component: {fileID: 1551476933}
+  - component: {fileID: 1551476934}
   m_Layer: 7
   m_Name: GroundLevel2
   m_TagString: Untagged
@@ -3241,6 +3258,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 2.220446e-16, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1551476934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551476928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2a25d4b643470c4391154f0dc1e3655, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundBoundLeft: -15
+  groundBoundRight: 15
+  groundBoundBottom: 41.5
 --- !u!1 &1566664757
 GameObject:
   m_ObjectHideFlags: 0
@@ -3460,6 +3492,7 @@ GameObject:
   - component: {fileID: 1613784260}
   - component: {fileID: 1613784259}
   - component: {fileID: 1613784263}
+  - component: {fileID: 1613784264}
   m_Layer: 7
   m_Name: GroundLevel1
   m_TagString: Untagged
@@ -3565,6 +3598,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 1.0435492, z: 10}
   m_Center: {x: 0, y: -0.5217746, z: 0}
+--- !u!114 &1613784264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613784258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2a25d4b643470c4391154f0dc1e3655, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundBoundLeft: -15
+  groundBoundRight: 15
+  groundBoundBottom: -15
 --- !u!1 &1692618593
 GameObject:
   m_ObjectHideFlags: 0
@@ -3590,7 +3638,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692618593}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.4, y: 0, z: -8.51}
+  m_LocalPosition: {x: -12.4, y: 0, z: -9.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3613,7 +3661,7 @@ MonoBehaviour:
     type: 3}
   column: 10
   row: 10
-  spaceBetweenBrick: 2
+  spaceBetweenBrick: 2.5
   colorData: {fileID: 11400000, guid: 8a0bbe3f0c4278f43bf9a237d171db2b, type: 2}
   enableOnStart: 1
   bricks: []

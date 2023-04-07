@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine.AI;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class Character : MonoBehaviour
 {
     [SerializeField] private GameObject brickMeshPrefab;
@@ -42,9 +43,9 @@ public class Character : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(other.tag == "Stair"){
+        if(other.CompareTag(Constant.TAG_STAIR)){
             BuildStair(other);
-        } else if(other.tag == "Brick"){
+        } else if(other.CompareTag(Constant.TAG_BRICK)){
             if(this.characterColor == other.GetComponent<Brick>().brickColor){ 
                 AddBrick(other);
             }
@@ -84,7 +85,7 @@ public class Character : MonoBehaviour
         ClearBrick();
         gameEnd = true;
         if(isWin){
-            animator.SetTrigger("winning");
+            animator.SetTrigger(Constant.TRIGGER_WINNING);
         }
         if(GetComponent<NavMeshAgent>() != null){
             GetComponent<NavMeshAgent>().enabled = false;
@@ -102,8 +103,7 @@ public class Character : MonoBehaviour
                 GetComponent<CharacterController>().enabled = false;
             }
             gotHit = true;
-            animator.SetTrigger("falling");
-            // GetComponent<Rigidbody>().isKinematic = false;
+            animator.SetTrigger(Constant.TRIGGER_FALLING);
             Invoke(nameof(CharacterGotUp), 3.5f);
         }
     }
@@ -119,6 +119,5 @@ public class Character : MonoBehaviour
             enemyScript.SwitchState(enemyScript.currentState);
         }
         gotHit = false;
-        // GetComponent<Rigidbody>().isKinematic = true;
     }
 }
