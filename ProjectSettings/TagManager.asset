@@ -8,6 +8,7 @@ TagManager:
   - Brick
   - Character
   - NextLevelTrigger
+  - BrickMesh
   layers:
   - Default
   - TransparentFX

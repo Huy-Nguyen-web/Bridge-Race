@@ -6,7 +6,7 @@ public class EnemyBuildBrickState : EnemyBaseState
         MoveToNextLevel(enemy);
     }
     public override void OnUpdate(Enemy enemy){
-        if(enemy.collectedBrick.Count == 0){
+        if(enemy.brickMeshStack.Count == 0){
             enemy.SwitchState(enemy.SeekBrickState);
         }
     }
